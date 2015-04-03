@@ -16,27 +16,48 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<div class="container" ng-controller="TicTacToeController as ttt">
-	
+<div id="parent-container" ng-controller="TicTacToeController as ttt">
+	<div id="game-container">
 		<h1>Time To Play</h1>
 		<div class="box" ng-repeat="box in ttt.boxes">
 			<div class = "box-hole" 
-      ng-class="{avatar: box.avatar}"
+      ng-class="{avatar1: box.avatar == 1, avatar2: box.avatar == 2}"
       ng-click="ttt.makeMove($index)">
-
-
-			
-
-				
-				
 			</div>
 		</div>
-		
+  </div>
+<br>
+   <div class="clear"></div>
+<p></p>
+
+    <div id="left-container">
+      <img class="large-avatar-left" src="images/Avatar1.png">
+      <h2>Player 1 Name</h2>
+      <h1>Wins: {{ ttt.playerOneScore }}</h1>
+    </div><!-- End of left container. -->
+
+    <div id="right-container">
+      <img class="large-avatar-right" src="images/avatar2.png">
+      <h2>Player 2 Name</h2>
+      <h1>Wins: {{ ttt.playerTwoScore }}</h1>
+    </div> <!-- End of right container. -->
+
+    <div class="clear"></div>
+
+    <p></p>
+    <div id="score-container">
+      <h1>{{ ttt.winner }}</h1>
+    </div><!-- end of score-container div -->
+
+    <div class="clear"></div>
+<p></p>
+    <div id="replay-container">
+      <h1>Play again?</h1>
+      <button ng-click="ttt.playAgain()">Yes</button><button ng-click="ttt.startOver()">No</button>
+    </div><!-- end of replay container div
 		<h2></h2>
 
 
-	</div>  <!--  end of container div tag -->
-
-
+ </div><!--  end of parent-container div tag -->
 </body>
 </html>
