@@ -2,129 +2,28 @@ angular
   .module("ticTacToe")
   .controller("TicTacToeController", TicTacToeController);
 
-function TicTacToeController() {
+TicTacToeController.$inject = ['$firebaseObject'];
+
+function TicTacToeController($firebaseObject) {
   var self = this;
-  var winYesOrNo = false;
-  self.playerOneScore = 0;
-  self.playerTwoScore = 0;
-  self.winner = "";
-  self.makeMove = makeMove;
-  self.playAgain = playAgain;
-  self.findWinner = findWinner;
-  self.startOver = startOver;
-  self.winnerYet = winnerYet;
-  self.boxes = [{
-    avatar: 0
-  }, {
-    avatar: 0
-  }, {
-    avatar: 0
-  }, {
-    avatar: 0
-  }, {
-    avatar: 0
-  }, {
-    avatar: 0
-  }, {
-    avatar: 0
-  }, {
-    avatar: 0
-  }, {
-    avatar: 0
-  }];
+  self.game = syncGameWithFirebase();
+  //self.localPlayer;
+  function syncGameWithFirebase(){
+      var ref = new Firebase('https://dazzling-inferno-4632.firebaseio.com');
+      var gameObject = $firebaseObject(ref);
 
-  var turnNum = 0;
-  //function to click any of the Tic Tac Toe cells
-  function makeMove(boxNum) {
-    //First check to see if there is a winner. If yes, then move ahead. If no, then stop.
-    if(winYesOrNo===true){
-      // Make sure we don't make a move where one has already been made!
-      return;
-      }else{
-       if (self.boxes[boxNum].avatar !== 0)
-        return;
-      self.boxes[boxNum].avatar = ((turnNum % 2) === 0 ? 1 : 2);
-      findWinner();
-      winnerYet();
-      tieTester();
-      turnNum++;
-    } 
-  }
-  
+      //setting global variables
 
-  function findWinner() {
-      if ((self.boxes[0].avatar === 1) && (self.boxes[1].avatar === 1) && (self.boxes[2].avatar === 1)) {
-        self.winner = "Player 1 wins horizontally";
-        winYesOrNo = true;
-        self.playerOneScore = self.playerOneScore + 1;
-      } else if ((self.boxes[3].avatar === 1) && (self.boxes[4].avatar === 1) && (self.boxes[5].avatar === 1)) {
-        self.winner = "Player 1 wins horizontally";
-        winYesOrNo = true;
-        self.playerOneScore = self.playerOneScore + 1;
-      } else if ((self.boxes[6].avatar === 1) && (self.boxes[7].avatar === 1) && (self.boxes[8].avatar === 1)) {
-        self.winner = "Player 1 wins horizontally";
-        winYesOrNo = true;
-        self.playerOneScore = self.playerOneScore + 1;
-      } else if ((self.boxes[0].avatar === 1) && (self.boxes[3].avatar === 1) && (self.boxes[6].avatar === 1)) {
-        self.winner = "Player 1 wins vertically";
-        winYesOrNo = true;
-        self.playerOneScore = self.playerOneScore + 1;
-      } else if ((self.boxes[1].avatar === 1) && (self.boxes[4].avatar === 1) && (self.boxes[7].avatar === 1)) {
-        self.winner = "Player 1 wins vertically";
-        winYesOrNo = true;
-        self.playerOneScore = self.playerOneScore + 1;
-      } else if ((self.boxes[2].avatar === 1) && (self.boxes[5].avatar === 1) && (self.boxes[8].avatar === 1)) {
-        self.winner = "Player 1 wins vertically";
-        winYesOrNo = true;
-        self.playerOneScore = self.playerOneScore + 1;
-      } else if ((self.boxes[0].avatar === 1) && (self.boxes[4].avatar === 1) && (self.boxes[8].avatar === 1)) {
-        self.winner = "Player 1 wins diagonally";
-        winYesOrNo = true;
-        self.playerOneScore = self.playerOneScore + 1;
-      } else if ((self.boxes[2].avatar === 1) && (self.boxes[4].avatar === 1) && (self.boxes[6].avatar === 1)) {
-        self.winner = "Player 1 wins diagonally";
-        winYesOrNo = true;
-        self.playerOneScore = self.playerOneScore + 1;
-      } else if ((self.boxes[0].avatar === 2) && (self.boxes[2].avatar === 2) && (self.boxes[2].avatar === 2)) {
-        self.winner = "Player 2 wins horizontally";
-        winYesOrNo = true;
-        self.playerTwoScore = self.playerTwoScore + 1;
-      } else if ((self.boxes[3].avatar === 2) && (self.boxes[4].avatar === 2) && (self.boxes[5].avatar === 2)) {
-        self.winner = "Player 2 wins horizontally";
-        winYesOrNo = true;
-        self.playerTwoScore = self.playerTwoScore + 1;
-      } else if ((self.boxes[6].avatar === 2) && (self.boxes[7].avatar === 2) && (self.boxes[8].avatar === 2)) {
-        self.winner = "Player 2 wins horizontally";
-        winYesOrNo = true;
-        self.playerTwoScore = self.playerTwoScore + 1;
-      } else if ((self.boxes[0].avatar === 2) && (self.boxes[3].avatar === 2) && (self.boxes[6].avatar === 2)) {
-        self.winner = "Player 2 wins vertically";
-        winYesOrNo = true;
-        self.playerTwoScore = self.playerTwoScore + 1;
-      } else if ((self.boxes[1].avatar === 2) && (self.boxes[4].avatar === 2) && (self.boxes[7].avatar === 2)) {
-        self.winner = "Player 2 wins vertically";
-        winYesOrNo = true;
-        self.playerTwoScore = self.playerTwoScore + 1;
-      } else if ((self.boxes[2].avatar === 2) && (self.boxes[5].avatar === 2) && (self.boxes[8].avatar === 2)) {
-        self.winner = "Player 2 wins vertically";
-        winYesOrNo = true;
-        self.playerTwoScore = self.playerTwoScore + 1;
-      } else if ((self.boxes[0].avatar === 2) && (self.boxes[4].avatar === 2) && (self.boxes[8].avatar === 2)) {
-        self.winner = "Player 2 wins diagonally";
-        winYesOrNo = true;
-        self.playerTwoScore = self.playerTwoScore + 1;
-      } else if ((self.boxes[2].avatar === 2) && (self.boxes[4].avatar === 2) && (self.boxes[6].avatar === 2)) {
-        self.winner = "Player 2 wins diagonally";
-        winYesOrNo = true;
-        self.playerTwoScore = self.playerTwoScore + 1;
-      }
-      return self.winner, self.playerOneScore, self.playerTwoScore;
+      gameObject.$loaded(function(){
 
-    } //end findwinner function
+        gameObject.winYesOrNo = false;
+        gameObject.playerOneScore = 0;
+        gameObject.playerTwoScore = 0;
+        gameObject.winner = "";
 
-    function playAgain(){
-      self.boxes = [{
-        avatar: 0
+        //definition of the array.
+        gameObject.boxes = [{
+          avatar: 0
         }, {
           avatar: 0
         }, {
@@ -142,12 +41,119 @@ function TicTacToeController() {
         }, {
           avatar: 0
         }];
-        winYesOrNo = false;
-        self.winner = "";
-      }
+        gameObject.turnNum = 0;
+        gameObject.$save();
+      });  
 
-      function startOver(){
-      self.boxes = [{
+      return gameObject;
+  }
+
+  
+
+  //linking functions to self.
+  self.makeMove = makeMove;
+  self.findWinner = findWinner;
+  self.startOver = startOver;
+  self.tieTester = tieTester;
+  self.winnerYet = winnerYet;
+
+  
+
+  //function definitions
+  //function to click any of the Tic Tac Toe cells
+  function makeMove(boxNum) {
+    //First check to see if there is a winner. If yes, then move ahead. If no, then stop.
+    if(self.game.winYesOrNo===true){
+      // Make sure we don't make a move where one has already been made!
+      return;
+      }else{
+       if (self.game.boxes[boxNum].avatar !== 0)
+        return;
+      self.game.boxes[boxNum].avatar = ((self.game.turnNum % 2) === 0 ? 1 : 2);
+      self.findWinner();
+      self.winnerYet();
+      self.tieTester();
+      self.game.turnNum++;
+
+      self.game.$save();
+    } 
+  }
+  
+
+  function findWinner() {
+      if ((self.game.boxes[0].avatar === 1) && (self.game.boxes[1].avatar === 1) && (self.game.boxes[2].avatar === 1)) {
+        self.game.winner = "Player 1 wins horizontally";
+        self.game.winYesOrNo = true;
+        self.game.playerOneScore = self.game.playerOneScore + 1;
+      } else if ((self.game.boxes[3].avatar === 1) && (self.game.boxes[4].avatar === 1) && (self.game.boxes[5].avatar === 1)) {
+        self.game.winner = "Player 1 wins horizontally";
+        self.game.winYesOrNo = true;
+        self.game.playerOneScore = self.game.playerOneScore + 1;
+      } else if ((self.game.boxes[6].avatar === 1) && (self.game.boxes[7].avatar === 1) && (self.game.boxes[8].avatar === 1)) {
+        self.game.winner = "Player 1 wins horizontally";
+        self.game.winYesOrNo = true;
+        self.game.playerOneScore = self.game.playerOneScore + 1;
+      } else if ((self.game.boxes[0].avatar === 1) && (self.game.boxes[3].avatar === 1) && (self.game.boxes[6].avatar === 1)) {
+        self.game.winner = "Player 1 wins vertically";
+        self.game.winYesOrNo = true;
+        self.game.playerOneScore = self.game.playerOneScore + 1;
+      } else if ((self.game.boxes[1].avatar === 1) && (self.game.boxes[4].avatar === 1) && (self.game.boxes[7].avatar === 1)) {
+        self.game.winner = "Player 1 wins vertically";
+        self.game.winYesOrNo = true;
+        self.game.playerOneScore = self.game.playerOneScore + 1;
+      } else if ((self.game.boxes[2].avatar === 1) && (self.game.boxes[5].avatar === 1) && (self.game.boxes[8].avatar === 1)) {
+        self.game.winner = "Player 1 wins vertically";
+        self.game.winYesOrNo = true;
+        self.game.playerOneScore = self.game.playerOneScore + 1;
+      } else if ((self.game.boxes[0].avatar === 1) && (self.game.boxes[4].avatar === 1) && (self.game.boxes[8].avatar === 1)) {
+        self.game.winner = "Player 1 wins diagonally";
+        self.game.winYesOrNo = true;
+        self.game.playerOneScore = self.game.playerOneScore + 1;
+      } else if ((self.game.boxes[2].avatar === 1) && (self.game.boxes[4].avatar === 1) && (self.game.boxes[6].avatar === 1)) {
+        self.game.winner = "Player 1 wins diagonally";
+        self.game.winYesOrNo = true;
+        self.game.playerOneScore = self.game.playerOneScore + 1;
+      } else if ((self.game.boxes[0].avatar === 2) && (self.game.boxes[2].avatar === 2) && (self.game.boxes[2].avatar === 2)) {
+        self.game.winner = "Player 2 wins horizontally";
+        self.game.winYesOrNo = true;
+        self.game.playerTwoScore = self.game.playerTwoScore + 1;
+      } else if ((self.game.boxes[3].avatar === 2) && (self.game.boxes[4].avatar === 2) && (self.game.boxes[5].avatar === 2)) {
+        self.game.winner = "Player 2 wins horizontally";
+        self.game.winYesOrNo = true;
+        self.game.playerTwoScore = self.game.playerTwoScore + 1;
+      } else if ((self.game.boxes[6].avatar === 2) && (self.game.boxes[7].avatar === 2) && (self.game.boxes[8].avatar === 2)) {
+        self.game.winner = "Player 2 wins horizontally";
+        self.game.winYesOrNo = true;
+        self.game.playerTwoScore = self.game.playerTwoScore + 1;
+      } else if ((self.game.boxes[0].avatar === 2) && (self.game.boxes[3].avatar === 2) && (self.game.boxes[6].avatar === 2)) {
+        self.game.winner = "Player 2 wins vertically";
+        self.game.winYesOrNo = true;
+        self.game.playerTwoScore = self.game.playerTwoScore + 1;
+      } else if ((self.game.boxes[1].avatar === 2) && (self.game.boxes[4].avatar === 2) && (self.game.boxes[7].avatar === 2)) {
+        self.game.winner = "Player 2 wins vertically";
+        self.game.winYesOrNo = true;
+        self.game.playerTwoScore = self.game.playerTwoScore + 1;
+      } else if ((self.game.boxes[2].avatar === 2) && (self.game.boxes[5].avatar === 2) && (self.game.boxes[8].avatar === 2)) {
+        self.game.winner = "Player 2 wins vertically";
+        self.game.winYesOrNo = true;
+        self.game.playerTwoScore = self.game.playerTwoScore + 1;
+      } else if ((self.game.boxes[0].avatar === 2) && (self.game.boxes[4].avatar === 2) && (self.game.boxes[8].avatar === 2)) {
+        self.game.winner = "Player 2 wins diagonally";
+        self.game.winYesOrNo = true;
+        self.game.playerTwoScore = self.game.playerTwoScore + 1;
+      } else if ((self.game.boxes[2].avatar === 2) && (self.game.boxes[4].avatar === 2) && (self.game.boxes[6].avatar === 2)) {
+        self.game.winner = "Player 2 wins diagonally";
+        self.game.winYesOrNo = true;
+        self.game.playerTwoScore = self.game.playerTwoScore + 1;
+      }
+      return self.game.winner, self.game.playerOneScore, self.game.playerTwoScore;
+
+    } //end findwinner function
+
+   
+
+      function startOver(clearIt){
+      self.game.boxes = [{
         avatar: 0
         }, {
           avatar: 0
@@ -166,20 +172,23 @@ function TicTacToeController() {
         }, {
           avatar: 0
       }];
-      self.playerOneScore = 0;
-      self.playerTwoScore = 0;
-      winYesOrNo = false;
-      self.winner = "";
+      if(clearIt) {
+        self.game.playerOneScore = 0;
+        self.game.playerTwoScore = 0;
+      }
+      self.game.winYesOrNo = false;
+      self.game.winner = "";
+      self.game.$save();
       }
 
       function tieTester(){
-        if(self.boxes[0].avatar !==0 && self.boxes[1].avatar !==0 && self.boxes[2].avatar !==0 && self.boxes[3].avatar !==0 && self.boxes[4].avatar !==0 && self.boxes[5].avatar !==0 && self.boxes[6].avatar !==0 && self.boxes[7].avatar !==0 && self.boxes[8].avatar !==0 && winYesOrNo !== true){
-          self.winner = "Tie Game";
+        if(self.game.boxes[0].avatar !==0 && self.game.boxes[1].avatar !==0 && self.game.boxes[2].avatar !==0 && self.game.boxes[3].avatar !==0 && self.game.boxes[4].avatar !==0 && self.game.boxes[5].avatar !==0 && self.game.boxes[6].avatar !==0 && self.game.boxes[7].avatar !==0 && self.game.boxes[8].avatar !==0 && self.game.winYesOrNo !== true){
+          self.game.winner = "Tie Game";
           }
         }
 
   function winnerYet() {
-    if (winYesOrNo === true) {
+    if (self.game.winYesOrNo === true) {
       return self.winner;
     } else {
       return;
