@@ -1,3 +1,0 @@
-# TicTacToe
-
-TicTacToe Repositorycreated.
