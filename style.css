@@ -12,6 +12,11 @@
     background-size:100%;
     background-position:center;
 }
+
+body {
+  background-color:#ffffcf;
+  text-align: center;
+}
 .box {
 	width:25%;
 	height:200px;
@@ -31,16 +36,15 @@
   }
 
 button {
-  display: block;
-  font-size: 1.1em;
+  font-size: 2.5em;
   font-weight: bold;
   text-transform: uppercase;
-  padding: 10px 15px;
-  margin: 50px;
+  padding: 35px 30px;
+  margin: 20px 150px 150px 150px;
   color: #ccc;
   background-color: #555;
-  background: -webkit-linear-gradient(#888, #555);
-  background: linear-gradient(#888, #555);
+  background: -webkit-linear-gradient(#888, #111);
+  background: linear-gradient(#111, #cba);
   border: 0 none;
   border-radius: 3px;
   text-shadow: 0 -1px 0 #000;
@@ -48,7 +52,7 @@ button {
   cursor: pointer;
   -webkit-transition: all 150ms ease;
   transition: all 150ms ease;
-  float:left;
+  float:center;
 }
 
 button:hover, button:focus
@@ -60,16 +64,10 @@ button:hover, button:focus
 @-webkit-keyframes pulsate
 {
   0%   { color: #ddd; text-shadow: 0 -1px 0 #000; }
-  50%  { color: #fff; text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff; }
-  100% { color: #ddd; text-shadow: 0 -1px 0 #000; }
+  50%  { color: #B20670; text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff; }
+  100% { color: #B20670; text-shadow: 0 -1px 0 #000; }
 }
-    
-@keyframes pulsate
-{
-  0%   { color: #ddd; text-shadow: 0 -1px 0 #000; }
-  50%  { color: #fff; text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff; }
-  100% { color: #ddd; text-shadow: 0 -1px 0 #000; }
-}
+  
 
 button:active
 {
@@ -83,7 +81,7 @@ button:active
 }
 
 #center-container {
-  float:left;
+  float:center;
   width:300px;
   height:500px;
   margin:0 auto;
@@ -133,28 +131,31 @@ h1 {
 
 .parent-container {
   font-family:sans-serif;
+  text-align:center;
 }
 
 #left-container {
   display:inline-block;
   width:300px;
   height:450px;
+  margin-right:12%;
   position:relative;
-  left:-39px;
   text-align:center;
+  float:center;
 }
 
 #replay-container {
-text-align:center;
+margin:0 auto;
 }
 
 #right-container {
   display:inline-block;
   width:300px;
   height:450px;
+  margin-left:12%;
   position:relative;
-  left:-5px;
   text-align:center;
+  float:center;
 }
 
 #score-container {

@@ -3,7 +3,7 @@
 <head>
 	<title>TicTacToe</title>
  <!-- connection to the main js page. -->
- <script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+ <script src= "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
 	 
 <!-- Connection to firebase server -->
   <script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
@@ -26,7 +26,7 @@
 <body>
 <div id="parent-container" ng-controller="TicTacToeController as ttt">
 	<div id="game-container">
-		<h1>Time To Play</h1>
+		<h1>Time To Play Tic Tac Toe!</h1>
 		<div class="box" ng-repeat="box in ttt.game.boxes">
 			<div class = "box-hole" 
       ng-class="{avatar1: box.avatar == 1, avatar2: box.avatar == 2}"
@@ -45,7 +45,7 @@
     </div><!-- End of left container. -->
 
     <div id="right-container">
-      <img class="large-avatar-right" src="images/avatar2.png">
+      <img class="large-avatar-right" src="images/Avatar2.png">
       <h2>Player 2 Name</h2>
       <h1>Wins: {{ ttt.game.playerTwoScore }}</h1>
     </div> <!-- End of right container. -->
@@ -56,14 +56,11 @@
     <div id="score-container">
       <h1>{{ ttt.game.winner }}</h1>
     </div><!-- end of score-container div -->
-
-    <div class="clear"></div>
 <p></p>
     <div id="replay-container">
-      <h1>Play again?</h1>
       <button ng-click="ttt.startOver(false)">Yes</button><button ng-click="ttt.startOver(true)">No</button>
     </div><!-- end of replay container div
-		<h2></h2>
+
 
 
  </div><!--  end of parent-container div tag -->
