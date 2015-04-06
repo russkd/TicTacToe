@@ -5,13 +5,14 @@ angular
 TicTacToeController.$inject = ['$firebaseObject'];
 
 function TicTacToeController($firebaseObject) {
-  var self = this;
+  var self  =this;
   self.game = syncGameWithFirebase();
-  //self.localPlayer;
+  
   function syncGameWithFirebase(){
       var ref = new Firebase('https://dazzling-inferno-4632.firebaseio.com');
       var gameObject = $firebaseObject(ref);
 
+/////////////////////////////////////////////////////////////////////
       //setting global variables
 
       gameObject.$loaded(function(){
@@ -22,7 +23,8 @@ function TicTacToeController($firebaseObject) {
         gameObject.winner = "";
         gameObject.playAgain = "Play Again?";
 
-        //definition of the array.
+/////////////////////////////////////////////////////////////////////
+        //definition of the box array.
         gameObject.boxes = [{
           avatar: 0
         }, {
@@ -49,8 +51,13 @@ function TicTacToeController($firebaseObject) {
       return gameObject;
   }
 
-  
+  // gameObject.formInfo = {};
+  //   function saveData(){
+  //     self.game.$save();
+  //   }
 
+  
+////////////////////////////////////////////////////////////////////
   //linking functions to self.
   self.makeMove = makeMove;
   self.findWinner = findWinner;
@@ -60,7 +67,7 @@ function TicTacToeController($firebaseObject) {
   self.winnerYet = winnerYet;
 
   
-
+/////////////////////////////////////////////////////////////////////
   //function definitions
   //function to click any of the Tic Tac Toe cells
   function makeMove(boxNum) {
@@ -81,7 +88,7 @@ function TicTacToeController($firebaseObject) {
     } 
   }
   
-
+/////////////////////////////////////////////////////////////////////
   function findWinner() {
       if ((self.game.boxes[0].avatar === 1) && (self.game.boxes[1].avatar === 1) && (self.game.boxes[2].avatar === 1)) {
         self.game.winner = "Player 1 wins horizontally.\r Play again?";
@@ -149,9 +156,9 @@ function TicTacToeController($firebaseObject) {
         self.game.playerTwoScore = self.game.playerTwoScore + 1;
       }
       return self.game.winner, self.game.playerOneScore, self.game.playerTwoScore, "Play again";
-
     } //end findwinner function
 
+////////////////////////////////////////////////////////////////////
       // function setPlayerSide(){
       //   if(self.game.turnNum === 1){
       //     self.localPlayer = 1;

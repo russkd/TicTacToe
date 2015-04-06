@@ -11,10 +11,7 @@
   <script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
 
 
-	<script type="text/javascript" src="main.js"></script>
-
-	<!-- connection to the "TicTacToe App page. -->
-	<script type="text/javascript" src="TicTacToeApp.js"></script>
+	<script type="text/javascript" src="app.js"></script>
 
 	<!-- connection to the "TicTacToe controller.js" page. -->
 	<script type="text/javascript" src="TicTacToeController.js"></script>
@@ -59,10 +56,29 @@
 <p></p>
     <div id="replay-container">
       <button ng-click="ttt.startOver(false)">Yes</button><button ng-click="ttt.startOver(true)">No</button>
-    </div><!-- end of replay container div
-
-
-
+    </div><!-- end of replay container div -->
  </div><!--  end of parent-container div tag -->
+
+ 
+<input type='text' id='nameInput' placeholder='Name'>
+<input type='text' id='messageInput' placeholder='Message'>
+ <script var Dataref = new Firebase('https://dazzling-inferno-4632.firebaseio.com')>
+
+ $('#messageInput').keypress(function (e) {
+  if (e.keyCode == 13) {
+    var name = $('#nameInput').val();
+    var text = $('#messageInput').val();
+    myDataRef.push({name: name, text: text});
+    $('#messageInput').val('');
+  }
+});
+
+ myDataRef.on('child_added', function(snapshot) {
+  //We'll fill this in later.
+  var message = snapshot.val();
+  displayChatMessage(message.name, message.text);
+});
+
+ </script>
 </body>
 </html>
